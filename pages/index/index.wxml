@@ -1,0 +1,82 @@
+<view class="container">
+  <scroll-view class="navbar" scroll-x="true" scroll-left="{{scrollNavbarLeft}}">
+    <view class="navbar-item {{ navbarArray[item].type }}" id="{{ item }}" wx:for="{{ navbarShowIndexArray }}" catchtap="onTapNavbar">
+      <view class="navbar-item-wrap">{{ navbarArray[item].text }}</view>
+    </view>
+  </scroll-view>
+  <view class="navbar-arrow-down" catchtap="showChannelSettingModal">
+    <view class="navbar-arrow-down-wrap">
+      <image class="navbar-arrow-icon" src="/images/index/icon_arrow_down.png"></image>
+    </view>
+  </view>
+  <view class="channel-setting {{ channelSettingShow }}">
+    <view class="channel-setting-text">频道设置</view>
+    <view class="navbar-arrow-up" catchtap="hideChannelSettingModal">
+      <image class="navbar-arrow-icon navbar-arrow-icon-up" src="/images/index/icon_arrow_up.png"></image>
+    </view>
+  </view>
+  <view class="channel-setting-modal {{ channelSettingModalShow }}" hidden="{{ channelSettingModalHide }}">
+    <view class="channel-show-text">
+      <view class="channel-show-text-wrap">显示频道</view>
+    </view>
+    <view class="channel-item" wx:for="{{ navbarShowIndexArray }}">
+      <view class="channel-item-wrap">
+        <view class="channel-item-left">
+          <image class="channel-item-icon-minus {{ !index || navbarShowIndexArray.length < 4 ? 'visibility-hidden' : '' }}" id="{{ item }}.0" src="/images/index/icon_minus.png" catchtap="hideChannel"></image>
+          <view class="channel-item-text">{{ navbarArray[item].text }}</view>
+        </view>
+        <view class="channel-item-up {{ index < 2 ? 'visibility-hidden' : '' }}" id="{{ item }}.00" catchtap="upChannel">上移</view>
+      </view>
+    </view>
+    <view class="channel-hide-text">
+      <view class="channel-hide-text-wrap">隐藏频道</view>
+    </view>
+    <view class="channel-item" wx:for="{{ navbarHideIndexArray }}">
+      <view class="channel-item-wrap">
+        <view class="channel-item-left">
+          <image class="channel-item-icon-plus" id="{{ item }}.0" src="/images/index/icon_plus.png" catchtap="showChannel"></image>
+          <view class="channel-item-text">{{ navbarArray[item].text }}</view>
+        </view>
+        <view class="channel-item-up visibility-hidden">上移</view>
+      </view>
+    </view>
+  </view>
+  <view class="loading-modal" hidden="{{ loadingModalHide }}">
+    <view class="loading-text-wrap">
+      <text class="loading-text">交大有思</text>
+    </view>
+  </view>
+
+
+  <scroll-view class="articles" bindtouchstart="onTouchstartArticles" bindtouchend="onTouchendArticles" hidden="{{ articlesHide }}">
+      <map id="myMap" longitude="{{articleContent[cindex].longitude}}" latitude="{{articleContent[cindex].latitude}}" show-location scale="16" show-location style="width: 100%; height: 95vh;" markers="{{articleContent}}" bindmarkertap="powerDrawer" data-statu="open">
+        <cover-image data-statu="open" class="nav" bindtap="moveToLocation" src="../../images/xnavi.png"/>
+        <!-- <cover-view class="btn" bindtap="powerDrawer" data-statu="open">button</cover-view>       -->
+        <!--mask-->
+        <!--content-->
+        <!--使用animation属性指定需要执行的动画-->
+        <cover-view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
+          <!--drawer content-->
+          <cover-image class="toloc" bindtap="toloc" src="../../images/toloc.png">
+          </cover-image>   
+          <cover-view class="wtoloc" bindtap="markertap" >导航
+          </cover-view>             
+          
+            <cover-view class="drawer_title">{{imarkname}}</cover-view>
+            <cover-view class="image">
+              <cover-image  wx:if="{{todos[0].image}}"class="image_frame" src="{{todos[0].image}}" mode="aspectFill">  
+              </cover-image>
+            </cover-view> 
+            <cover-view class="drawer_content" wx:for="{{todos}}" wx:for-item="todo" wx:key="objectId"data-id="{{todo.objectId}}">
+               {{todo.content}}                            
+            </cover-view>
+          <cover-view class="btn_ok" bindtap="powerDrawer" data-statu="close">确定</cover-view>
+        </cover-view>
+      </map>
+    <!--button-->
+    <!-- <view wx:for="{{articleContent}}">
+      {{item.id}}
+    </view>> -->
+  </scroll-view>
+
+</view>
