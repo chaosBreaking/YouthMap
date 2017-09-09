@@ -1,0 +1,11 @@
+{
+  "pages": [
+    "pages/index/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#3396d7",
+    "navigationBarTitleText": "交大有思",
+    "navigationBarTextStyle": "white"
+  }
+}
